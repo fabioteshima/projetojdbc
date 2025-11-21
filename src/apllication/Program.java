@@ -29,11 +29,16 @@ public class Program {
 			System.out.println(depFindAll);
 		}
 		
-		System.out.println("\n === TEST 3: department insert ===");
-		Department newDep = new Department(null, "Shoes");
-		departmentDao.insert(newDep);
-		System.out.println("Department inserted : " + newDep);
-		DB.closeConnection();
+//		System.out.println("\n === TEST 3: department insert ===");
+//		Department newDep = new Department(null, "Shoes");
+//		departmentDao.insert(newDep);
+//		System.out.println("Department inserted : " + newDep);
+//		DB.closeConnection();
+		
+		System.out.println("\n=== TEST 4: department update ===");
+		dep = new Department(10, "Foods");
+		departmentDao.update(dep);
+		
 	}
 
 }
