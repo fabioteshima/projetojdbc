@@ -21,9 +21,31 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 	}
 
 	@Override
-	public void insert(Department obj) {
-		// TODO Auto-generated method stub
-		
+	public Department insert(Department obj) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("INSERT INTO department (Name) "
+					+ "VALUES (?)", java.sql.Statement.RETURN_GENERATED_KEYS);
+			st.setString(1, obj.getName());
+			int rowsAffected = st.executeUpdate();
+			if(rowsAffected > 0) {
+				rs = st.getGeneratedKeys();
+				if(rs.next()) {
+					obj.setId(rs.getInt(1));
+					DB.closeResultSet(rs);
+				}
+				return obj;
+			}
+			else {
+				throw new DbException("Insert error!");
+			}
+		} catch (Exception e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
@@ -45,7 +67,8 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 		try {
 			st = conn.prepareStatement("SELECT * FROM department WHERE Id = ?");
 			st.setInt(1, id);
-			rs = st.executeQuery();
+			st.executeQuery();
+			rs = st.getResultSet();
 			if(rs.next()) {
 				Department dep = instantiateDepartment(rs);
 				return dep;
@@ -69,7 +92,8 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement("SELECT * FROM department");
-			rs = st.executeQuery();
+			st.executeQuery();
+			rs = st.getResultSet();
 			List<Department> list = new ArrayList<Department>();
 			while(rs.next()) {
 				Department dep = instantiateDepartment(rs);
