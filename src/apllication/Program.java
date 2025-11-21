@@ -30,14 +30,17 @@ public class Program {
 		}
 		
 //		System.out.println("\n === TEST 3: department insert ===");
-//		Department newDep = new Department(null, "Shoes");
+//		Department newDep = new Department(null, "Pets");
 //		departmentDao.insert(newDep);
 //		System.out.println("Department inserted : " + newDep);
 //		DB.closeConnection();
 		
-		System.out.println("\n=== TEST 4: department update ===");
-		dep = new Department(10, "Foods");
-		departmentDao.update(dep);
+//		System.out.println("\n=== TEST 4: department update ===");
+//		dep = new Department(11, "Pets");
+//		departmentDao.update(dep);
+		
+		System.out.println("\n=== TEST 5: department delete ===");
+		departmentDao.deleteById(11);
 		
 	}
 
